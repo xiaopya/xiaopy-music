@@ -1,0 +1,65 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+  font-weight: 200;
+  font-family: "PingFangSC-Medium", "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, rgb(244, 253, 255) 0%, rgb(255, 255, 255) 100%);
+  padding-top: 52px;
+}
+
+ul li {
+  list-style: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a {
+  line-height: 1.5;
+}
+
+// 滚动条
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 5px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: 1px 1px 5px var(--scroll-color) inset;
+}
+
+::-webkit-scrollbar-thumb {
+  min-height: 20px;
+  background-clip: content-box;
+  box-shadow: 0 0 0 5px var(--scroll-color) inset;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
