@@ -1,5 +1,10 @@
 import * as  React from 'react';
 
+
+/**
+ * 图库
+ * @constructor
+ */
 export default function ImagesList() {
     return (
         <div style={{

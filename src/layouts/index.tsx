@@ -1,11 +1,14 @@
 import * as React from 'react';
-import {Outlet, Link, useAppData, useLocation} from 'umi';
+import {Link, Outlet, useAppData, useLocation} from 'umi';
 import styles from './index.less';
 
+/**
+ * 路由菜单
+ * @constructor
+ */
 export default function SpeedDialTooltipOpen() {
     const {routes} = useAppData();
     const {pathname} = useLocation();
-    console.log('pathname', pathname)
     return (
         <div>
             <div className={styles.headerMenu}>
@@ -14,7 +17,7 @@ export default function SpeedDialTooltipOpen() {
                         {"{"}<span>xiaopy</span>{"}"}
                     </div>
                     <div className={styles.navLink}>
-                        {Object.values(routes)?.filter(val => !val?.isLayout).map((action) => (
+                        {Object.values(routes)?.filter((val) => !val?.isLayout).map((action: any) => (
                             <Link
                                 style={{
                                     display: 'inline-block',

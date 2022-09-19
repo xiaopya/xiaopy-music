@@ -9,7 +9,7 @@ import useTypewriter from "react-typewriter-hook";
 export default function LinearIndeterminate() {
     const text = useTypewriter("...");
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{width: '100%'}}>
             <div style={{
                 textAlign: 'center',
                 marginTop: '300px',
