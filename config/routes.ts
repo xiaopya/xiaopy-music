@@ -4,13 +4,14 @@ export const routes = [
         redirect: '/home',
     },
     {
-        path: '*',
-        redirect: '/home'
-    },
-    {
         path: '/home',
         component: '@/pages/Home',
         name: "首页",
+    },
+    {
+        path: '/resources',
+        component: '@/pages/Resources',
+        name: '链接',
     },
     {
         path: '/relaxed',
@@ -26,5 +27,9 @@ export const routes = [
         path: '/individuals',
         component: "@/pages/Individuals",
         name: '个人',
-    }
+    },
+    {
+        path: '*',
+        redirect: '/home'
+    },
 ]

@@ -1,20 +1,19 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import useTypewriter from "react-typewriter-hook";
+import LoadingSvg from '@/images/loading.svg'
 
 /**
- * 路由懒加载
+ * 懒加载动画
  * @constructor
  */
 export default function LinearIndeterminate() {
-    const text = useTypewriter("...");
     return (
-        <Box sx={{width: '100%'}}>
+        <Box sx={{width: '100%', height: '100vh',}}>
             <div style={{
                 textAlign: 'center',
-                marginTop: '300px',
+                paddingTop: '300px',
             }}>
-                loading{text}
+                <img src={LoadingSvg}/>
             </div>
         </Box>
     );
