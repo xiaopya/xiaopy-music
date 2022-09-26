@@ -9,18 +9,12 @@
     "start": "npm run dev"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
+    "@arco-design/web-react": "^2.40.1",
     "@emotion/styled": "^11.10.4",
-    "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.10.5",
-    "@mui/styled-engine-sc": "^5.10.3",
-    "antd": "^4.23.2",
     "babel-helpers": "^6.24.1",
     "classnames": "^2.3.2",
     "lodash": "^4.17.21",
-    "react-hot-loader": "^4.13.0",
     "react-typewriter-hook": "^1.0.1",
-    "styled-components": "^5.3.5",
     "umi": "^4.0.21"
   },
   "devDependencies": {
