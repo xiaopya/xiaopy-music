@@ -23,3 +23,17 @@ export function randomColor() {
     }
     return '#' + color;
 }
+
+
+/**
+ * 监听浏览器窗口切换
+ */
+export function visibilitychangeHandler() {
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') { // 状态判断：显示（切换到当前页面）
+            document.title = '欢迎回来🎉'
+        } else if (document.visibilityState === 'hidden') { // 状态判断：隐藏（离开当前页面）
+            document.title = '需要重新激活哟😘'
+        }
+    })
+}

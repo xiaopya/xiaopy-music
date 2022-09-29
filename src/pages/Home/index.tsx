@@ -16,7 +16,7 @@ export default function Home() {
     return (
         <div className={classNames({
             [styles.xiaopyHome]: true,
-            'mainPadding': true,
+            'mainPadding': false,
         })}>
             <div className={classNames({
                 [styles.pyCard]: true,

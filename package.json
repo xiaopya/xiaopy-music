@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@arco-design/web-react": "^2.40.1",
-    "@emotion/styled": "^11.10.4",
     "babel-helpers": "^6.24.1",
     "classnames": "^2.3.2",
     "lodash": "^4.17.21",
