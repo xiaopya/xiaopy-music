@@ -1,6 +1,7 @@
 import {Carousel} from '@arco-design/web-react';
 
 function CarouselUi({imageSrc = []}) {
+    console.log(imageSrc, 'src')
     return (
         <Carousel
             autoPlay

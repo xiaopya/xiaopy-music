@@ -14,7 +14,7 @@ export async function bannerLists() {
  * 推荐新音乐
  * @returns
  */
-export async function personalizedNewSong(limit = 100) {
+export async function personalizedNewSong(limit) {
     const res = await Http.get(Api.MUSIC.MUSIC_PERSONALIZED_NEWSONG, limit);
     return res;
 }
@@ -23,7 +23,7 @@ export async function personalizedNewSong(limit = 100) {
  * 推荐歌单
  * @returns
  */
-export async function personalized(limit = 100) {
+export async function personalized(limit) {
     const res = await Http.get(Api.MUSIC.MUSIC_PERSONALIZED, limit);
     return res;
 }

@@ -5,17 +5,18 @@ const Row = Grid.Row;
 const Col = Grid.Col;
 
 const PlaylistUi = memo(({list}) => {
-    console.log(list, 'list')
     return (
         <div>
             <Row className='grid-gutter-demo'>
                 {
-                    list.map(listval => (
+                    list.map((listval, index) => (
                         <div style={{
                             display: 'flex',
                             justifyContent: 'space-between',
                             flexWrap: 'wrap',
-                        }}>
+                        }}
+                             key={index}
+                        >
                             <div style={{
                                 padding: '10px',
                                 overflow: 'hidden',
