@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Link, Outlet, useAppData, useLocation} from 'umi';
+import {history, Link, Outlet, useAppData, useLocation} from 'umi';
 import styles from './index.less';
 
 /**
@@ -9,11 +9,16 @@ import styles from './index.less';
 export default function SpeedDialTooltipOpen() {
     const {routes} = useAppData();
     const {pathname} = useLocation();
+
+    const clickLogoHandler = () => {
+        history.push('/music')
+    }
+
     return (
         <div>
             <div className={styles.headerMenu}>
                 <div className={styles.navs}>
-                    <div className={styles.logo}>
+                    <div className={styles.logo} onClick={clickLogoHandler}>
                         {"{"}<span>xiaopy</span>{"}"}
                     </div>
                     <div className={styles.navLink}>

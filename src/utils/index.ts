@@ -37,3 +37,10 @@ export function visibilitychangeHandler() {
         }
     })
 }
+
+/**
+ * 判断是否是开发环境
+ */
+export function isProduction(): boolean {
+    return process.env.NODE_ENV === "production";
+}
