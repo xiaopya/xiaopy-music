@@ -1,5 +1,5 @@
-export const musicLocalUrl = "//localhost:3000";
-// export const musicLocalUrl = "//cloudmusic-sable.vercel.app";
+// export const musicLocalUrl = "//localhost:3000";
+export const musicLocalUrl = "//cloudmusic-sable.vercel.app";
 export const Api = {
     MUSIC: {
         /* 轮播图 */
