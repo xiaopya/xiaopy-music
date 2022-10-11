@@ -8,7 +8,6 @@ export const Http = {
      * @param {*} url 请求地址
      */
     get: function (url: string, data: any = {}) {
-        console.log(data, 'data')
         const newUrl = `${url}?${qs.stringify(data)}`;
         const signal = controller.signal;
         return new Promise((resolve, reject) => {

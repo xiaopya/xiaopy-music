@@ -1,5 +1,4 @@
-// export const musicLocalUrl = "//localhost:3000";
-export const musicLocalUrl = "//cloudmusic-sable.vercel.app";
+export const musicLocalUrl = process.env.NODE_ENV === 'production' ? "//cloudmusic-sable.vercel.app" : "//localhost:3000";
 export const Api = {
     MUSIC: {
         /* 轮播图 */
@@ -14,5 +13,8 @@ export const Api = {
 
         /* 歌单详情 */
         MUSIC_PLAYLIST_DETAIL: `${musicLocalUrl}/playlist/detail`,
+
+        /* 歌单所有歌曲 */
+        MUSIC_TRACK_ALL: `${musicLocalUrl}/playlist/track/all`,
     }
 };

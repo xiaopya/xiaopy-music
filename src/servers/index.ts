@@ -33,6 +33,12 @@ export async function personalized(params) {
  * @param params
  */
 export async function playListDetail(params) {
+    console.log(params, 'res')
     const res = await Http.get(Api.MUSIC.MUSIC_PLAYLIST_DETAIL, params);
+    return res;
+}
+
+export async function trackAll(params) {
+    const res = await Http.get(Api.MUSIC.MUSIC_TRACK_ALL, params);
     return res;
 }

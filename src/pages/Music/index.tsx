@@ -52,12 +52,9 @@ const Music = () => {
         // dispatchGetBannerListsHandler(dispatch, {});
         // dispatchGetPersonalizedNewSongHandler(dispatch, {limit: 14})
         // dispatchGetPersonalizedHandler(dispatch, {limit: 14,})
-        InitializingData().then(r => {
-            console.log(r, 'r')
+        InitializingData().then(() => {
         });
     }, [])
-
-    console.log(hideText, 'state.hideText')
 
     return (
         <div className={classNames({
