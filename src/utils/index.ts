@@ -1,3 +1,5 @@
+import {localCache} from './loaclStorage'
+
 /**
  * 区分时间
  */
@@ -6,7 +8,7 @@ export function distinguishTime() {
     if (date.getHours() >= 6 && date.getHours() < 12) {
         return 1; // 早
     } else if (date.getHours() >= 12 && date.getHours() < 18) {
-        return 2; // 中
+        return 2; // 下
     } else {
         return 3; // 晚
     }
@@ -37,6 +39,48 @@ export function visibilitychangeHandler() {
         }
     })
 }
+
+/**
+ * 切换页面主题
+ */
+export function changeTheme() {
+    const root: HTMLElement | null = document.getElementById('root');
+    if (!root) return;
+    const body: HTMLElement = document.body
+    switch (body.className) {
+        case "dark":
+            body.className = root.className = 'light'
+            localCache.setItem('theme', JSON.stringify('light'));
+            break;
+        case "light":
+            body.className = root.className = 'dark';
+            localCache.setItem('theme', JSON.stringify('dark'));
+            break
+        default:
+            body.className = root.className = 'dark';
+            localCache.setItem('theme', JSON.stringify('dark'));
+            break;
+    }
+}
+
+
+/**
+ * 初始化主题
+ */
+export function themeInitialize() {
+    const root: HTMLElement | null = document.getElementById('root');
+    if (!root) return;
+    const body: HTMLElement = document.body
+    const theme = localCache.getItem('theme');
+    console.log(theme, 'theme')
+    if (theme) {
+        body.className = root.className = theme;
+    } else {
+        body.className = root.className = 'light';
+    }
+
+}
+
 
 /**
  * 判断是否是开发环境

@@ -16,6 +16,7 @@ export default function Home() {
     return (
         <div className={classNames({
             [styles.xiaopyHome]: true,
+            "xiaopy": true,
             'mainPadding': false,
         })}>
             <div className={classNames({

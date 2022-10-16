@@ -1,4 +1,9 @@
-export const musicLocalUrl = process.env.NODE_ENV === 'production' ? "//cloudmusic-sable.vercel.app" : "//localhost:3000";
+import {isProduction} from '@/utils'
+
+const env = isProduction();
+
+const musicLocalUrl = env ? "//cloudmusic-sable.vercel.app" : "//localhost:3000";
+
 export const Api = {
     MUSIC: {
         /* 轮播图 */

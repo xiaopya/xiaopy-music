@@ -9,6 +9,13 @@ import classNames from "classnames";
 
 const Row = Grid.Row;
 
+interface playListType {
+    id: number;
+    name: string,
+    picUrl?: string,
+    pshut?: boolean,
+}
+
 
 const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
 
@@ -26,11 +33,27 @@ const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
             id: state.playListId,
         })
         if (res.code === 200) {
+
+            res.playlist.tracks?.map(v => {
+                v.pshut = false;
+            })
+
             setState((s) => ({
                 ...s,
                 playList: res.playlist.tracks
             }))
         }
+    }
+
+    const clickListHandler = () => {
+        state.playList.filter(v => v.id !== val.id).map(fval => fval.pshut = false)
+
+        val.pshut = !val.pshut;
+
+        setState((s) => ({
+            ...s,
+            playList: state.playList
+        }))
     }
 
     useEffect(() => {
@@ -50,7 +73,7 @@ const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
                 <FrontSide>
                     <Row className='grid-gutter-demo'>
                         {
-                            list.map((listval) => (
+                            list.map((listval: playListType) => (
                                 <div style={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
@@ -91,19 +114,13 @@ const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
                         'ulBlock': true,
                     })}>
                         {
-                            state.playList?.map(val => (
+                            state.playList?.map((val: playListType) => (
                                 <li key={val.id}>
                                     <div>
                                         <p>{val.name}</p>
-                                        <p onClick={() => {
-                                            console.log(111, onOff.isInit)
-                                            setOnOff({
-                                                isInit: !onOff.isInit,
-                                                currentId: val.id
-                                            });
-                                        }}>
+                                        <p onClick={clickListHandler}>
                                             {
-                                                onOff && val.id === onOff.currentId ? <StopCircle/> : <PlayCircle/>
+                                                val.pshut ? <StopCircle/> : <PlayCircle/>
                                             }
                                         </p>
                                     </div>

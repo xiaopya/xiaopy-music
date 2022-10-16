@@ -1,12 +1,13 @@
 .headerMenu {
   width: 100%;
   height: 47px;
-  backdrop-filter: blur(5px);
+  background: transparent;
+  box-shadow: 1px 1px 25px 0 var(--shadow-color);
+  transition: background-color, color, box-shadow .3s;
 
   .navs {
     position: fixed;
     top: 0;
-    padding: 7px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -14,14 +15,27 @@
     z-index: 999;
     left: 50%;
     transform: translate(-50%);
+    color: var(--text-color);
+
+    .navLink {
+
+      .nav-link {
+        display: flex;
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px 10px;
+      }
+
+      .active {
+        //color: var(--text-color-active);
+        text-decoration: line-through;
+      }
+    }
+
 
     .logo {
       width: 100px;
       cursor: pointer;
-
-      span {
-        background-color: #e9f0f5;
-      }
     }
   }
 }

@@ -1,6 +1,8 @@
 import * as React from 'react';
-import {history, Link, Outlet, useAppData, useLocation} from 'umi';
-import styles from './index.less';
+import {history, Outlet, useAppData, useLocation} from 'umi';
+import './index.less';
+import classNames from "classnames";
+import SwitchUi from '@/components/Switch'
 
 /**
  * 路由菜单
@@ -16,25 +18,35 @@ export default function SpeedDialTooltipOpen() {
 
     return (
         <div>
-            <div className={styles.headerMenu}>
-                <div className={styles.navs}>
-                    <div className={styles.logo} onClick={clickLogoHandler}>
+            <div className={classNames({
+                headerMenu: true,
+            })}>
+                <div className={classNames({
+                    navs: true,
+                })}>
+                    <div className={classNames({
+                        logo: true,
+                    })} onClick={clickLogoHandler}>
                         {"{"}<span>xiaopy</span>{"}"}
                     </div>
-                    <div className={styles.navLink}>
+                    <div className={classNames({
+                        navLink: true,
+                    })}>
                         {Object.values(routes)?.filter((val) => !val?.isLayout).map((action: any) => (
-                            <Link
-                                style={{
-                                    display: 'inline-block',
-                                    padding: '10px 10px',
-                                    textDecoration: action.path === pathname ? 'line-through' : '',
+                            <span
+                                className={classNames({
+                                    'nav-link': true,
+                                    'active': action.path === pathname ? true : false,
+                                })}
+                                onClick={() => {
+                                    history.push(action.path)
                                 }}
-                                to={action.path}
                                 key={action.id}
                             >
                                 {action.name}
-                            </Link>
+                            </span>
                         ))}
+                        <SwitchUi/>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,6 @@
 import "@arco-design/web-react/dist/css/arco.css";
-import {visibilitychangeHandler} from '@/utils';
+import {themeInitialize, visibilitychangeHandler} from '@/utils';
 
 visibilitychangeHandler();
+
+themeInitialize();
