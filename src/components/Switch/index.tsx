@@ -1,10 +1,11 @@
-import {Switch} from '@arco-design/web-react';
-import Taiyang from '@/static/taiyang'
-import Yueliang from '@/static/yueliang'
 import {changeTheme} from '@/utils'
-import {useState} from "react";
 import {localCache} from '@/utils/loaclStorage'
+import React, {useState} from "react";
+import './switch.less'
 
+interface checkType {
+    target: { checked: boolean | ((prevState: boolean) => boolean); };
+}
 
 function isTheme(key: string) {
     let is = false;
@@ -22,19 +23,22 @@ function isTheme(key: string) {
     return is;
 }
 
+export default function () {
 
-const SwitchUi = () => {
+    const theme = localCache.getItem('theme') as string;
 
-    const theme = localCache.getItem('theme');
+    const [checked, setChecked] = useState<boolean>(!isTheme(theme));
+    console.log(isTheme(theme), 'sTheme(theme)')
 
-    const [state] = useState<boolean>(isTheme(theme));
-
-    const changeHandler = (check: boolean) => {
-        changeTheme()
+    const clickHandler = (val: checkType) => {
+        setChecked(val.target.checked);
+        changeTheme();
     }
 
-    return <Switch defaultChecked={state} onChange={changeHandler} size="small" checkedIcon={<Yueliang/>}
-                   uncheckedIcon={<Taiyang/>}/>;
-};
-
-export default SwitchUi;
+    return (
+        <label className="switch">
+            <input type="checkbox" checked={checked} onChange={clickHandler}/>
+            <span className="slider"></span>
+        </label>
+    )
+}

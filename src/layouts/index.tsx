@@ -30,22 +30,27 @@ export default function SpeedDialTooltipOpen() {
                         {"{"}<span>xiaopy</span>{"}"}
                     </div>
                     <div className={classNames({
-                        navLink: true,
+                        navMain: true,
                     })}>
-                        {Object.values(routes)?.filter((val) => !val?.isLayout).map((action: any) => (
-                            <span
-                                className={classNames({
-                                    'nav-link': true,
-                                    'active': action.path === pathname ? true : false,
-                                })}
-                                onClick={() => {
-                                    history.push(action.path)
-                                }}
-                                key={action.id}
-                            >
+                        <div className={classNames({
+                            navLink: true,
+                        })}>
+                            {Object.values(routes)?.filter((val) => !val?.isLayout).map((action: any) => (
+                                <span
+                                    className={classNames({
+                                        'nav-link': true,
+                                        'active': action.path === pathname ? true : false,
+                                        'apply-shake': action.path === pathname ? true : false
+                                    })}
+                                    onClick={() => {
+                                        history.push(action.path)
+                                    }}
+                                    key={action.id}
+                                >
                                 {action.name}
                             </span>
-                        ))}
+                            ))}
+                        </div>
                         <SwitchUi/>
                     </div>
                 </div>

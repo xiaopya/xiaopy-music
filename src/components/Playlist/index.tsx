@@ -45,7 +45,7 @@ const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
         }
     }
 
-    const clickListHandler = () => {
+    const clickListHandler = (val) => {
         state.playList.filter(v => v.id !== val.id).map(fval => fval.pshut = false)
 
         val.pshut = !val.pshut;
@@ -117,8 +117,10 @@ const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
                             state.playList?.map((val: playListType) => (
                                 <li key={val.id}>
                                     <div>
-                                        <p>{val.name}</p>
-                                        <p onClick={clickListHandler}>
+                                        <p className={classNames({
+                                            "apply-shake": val.pshut
+                                        })}>{val.name}</p>
+                                        <p onClick={() => clickListHandler(val)}>
                                             {
                                                 val.pshut ? <StopCircle/> : <PlayCircle/>
                                             }

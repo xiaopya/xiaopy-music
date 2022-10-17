@@ -17,18 +17,22 @@
     transform: translate(-50%);
     color: var(--text-color);
 
-    .navLink {
+    .navMain {
+      display: flex;
+      align-items: center;
 
-      .nav-link {
-        display: flex;
-        cursor: pointer;
-        display: inline-block;
-        padding: 10px 10px;
-      }
+      .navLink {
+        .nav-link {
+          display: flex;
+          cursor: pointer;
+          display: inline-block;
+          padding: 10px 10px;
+        }
 
-      .active {
-        //color: var(--text-color-active);
-        text-decoration: line-through;
+        .active {
+          //color: var(--text-color-active);
+          text-decoration: line-through;
+        }
       }
     }
 
