@@ -1,11 +1,11 @@
 import React, {memo, useEffect, useState} from 'react';
 import {Grid, Image} from '@arco-design/web-react';
-import Flippy, {BackSide, FrontSide} from 'react-flippy';
-import StopCircle from '@/static/stop-circle-line'
-import PlayCircle from '@/static/play-circle-line'
 import {playListDetail} from '@/servers';
 import './playlist.less'
+import {DrawerUi} from "@/components/DrawerUi";
 import classNames from "classnames";
+import StopCircle from '@/static/stop-circle-line'
+import PlayCircle from '@/static/play-circle-line'
 
 const Row = Grid.Row;
 
@@ -17,15 +17,13 @@ interface playListType {
 }
 
 
-const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
+const PlaylistUi = memo(({list, palyRef}) => {
 
-    const [onOff, setOnOff] = useState({
-        isInit: false,
-        currentId: undefined,
-    });
     const [state, setState] = useState({
         playListId: undefined,
         playList: [],
+        listName: undefined,
+        visible: false,
     });
 
     async function InitializingData() {
@@ -45,6 +43,7 @@ const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
         }
     }
 
+
     const clickListHandler = (val) => {
         state.playList.filter(v => v.id !== val.id).map(fval => fval.pshut = false)
 
@@ -56,6 +55,38 @@ const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
         }))
     }
 
+    const onOk = (val) => {
+        console.log(val, 'val.')
+    }
+
+    const onCancel = () => {
+        setState((s) => ({...s, visible: false}))
+    }
+
+    const content = (
+        <ul className={classNames({
+            'ulBlock': true,
+        })}>
+            {
+                state.playList?.map((val: playListType) => (
+                    <li key={val.id}>
+                        <div>
+                            <p className={classNames({
+                                "apply-shake": val.pshut
+                            })}>{val.name}</p>
+                            <p onClick={() => clickListHandler(val)}>
+                                {
+                                    val.pshut ? <StopCircle/> : <PlayCircle/>
+                                }
+                            </p>
+                        </div>
+                    </li>
+                ))
+            }
+        </ul>
+    )
+
+
     useEffect(() => {
 
         InitializingData();
@@ -63,76 +94,49 @@ const PlaylistUi = memo(({list, palyRef, reverseHideHandler}) => {
     }, [state.playListId])
 
     return (
-        <div>
-            <Flippy
-                flipOnHover={false}
-                flipOnClick={false}
-                flipDirection="vertical"
-                ref={palyRef}
-            >
-                <FrontSide>
-                    <Row className='grid-gutter-demo'>
-                        {
-                            list.map((listval: playListType) => (
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    flexWrap: 'wrap',
-                                }}
-                                     key={listval.id}
+        <>
+            <Row className='grid-gutter-demo'>
+                {
+                    list.map((listval: playListType) => (
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                        }}
+                             key={listval.id}
 
-                                     onClick={() => {
-                                         palyRef.current.toggle();
-                                         reverseHideHandler()
-                                         setState((s) => ({...s, playListId: listval.id,}))
-                                     }}
-                                >
-                                    <div style={{
-                                        padding: '10px',
-                                        overflow: 'hidden',
-                                        cursor: 'pointer',
-                                    }}>
-                                        <Image
-                                            width={150}
-                                            style={{
-                                                borderRadius: '6px',
-                                            }}
-                                            preview={false}
-                                            src={listval.picUrl}
-                                            title={listval.name}
-                                            footerPosition='outer'
-                                            alt='lamp'
-                                        />
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </Row>
-                </FrontSide>
-                <BackSide>
-                    <ul className={classNames({
-                        'ulBlock': true,
-                    })}>
-                        {
-                            state.playList?.map((val: playListType) => (
-                                <li key={val.id}>
-                                    <div>
-                                        <p className={classNames({
-                                            "apply-shake": val.pshut
-                                        })}>{val.name}</p>
-                                        <p onClick={() => clickListHandler(val)}>
-                                            {
-                                                val.pshut ? <StopCircle/> : <PlayCircle/>
-                                            }
-                                        </p>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </BackSide>
-            </Flippy>
-        </div>
+                             onClick={() => {
+                                 setState((s) => ({
+                                     ...s,
+                                     visible: true,
+                                     playListId: listval.id,
+                                     listName: listval.name,
+                                 }))
+                             }}
+                        >
+                            <div style={{
+                                padding: '10px',
+                                overflow: 'hidden',
+                                cursor: 'pointer',
+                            }}>
+                                <Image
+                                    width={150}
+                                    style={{
+                                        borderRadius: '6px',
+                                    }}
+                                    preview={false}
+                                    src={listval.picUrl}
+                                    title={listval.name}
+                                    footerPosition='outer'
+                                    alt='lamp'
+                                />
+                            </div>
+                        </div>
+                    ))
+                }
+            </Row>
+            <DrawerUi title={state.listName} visible={state.visible} content={content} onCancel={onCancel} onOk={onOk}/>
+        </>
     )
 })
 

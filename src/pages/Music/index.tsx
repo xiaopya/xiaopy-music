@@ -22,17 +22,12 @@ const Music = () => {
     // const dispatch = useDispatch();
     // const {bannerList, personalizedList} = useSelector(state => state.music);
 
-    const [hideText, setHideText] = useState(true);
     const [state, setState] = useState({
         loading: false,
         bannerList: [],
         personalizedList: [],
         hideText: true,
     });
-
-    const reverseHideHandler = () => {
-        setHideText(false)
-    }
 
     async function InitializingData() {
         const s = await bannerLists();
@@ -70,16 +65,8 @@ const Music = () => {
                                 'vertical-class': true,
                             })}>
                                 <p>推荐歌单</p>
-                                <p className={classNames({
-                                    'pHide': true,
-                                    'hideText': hideText,
-                                })} onClick={() => {
-                                    setHideText(true);
-                                    ref.current.toggle();
-                                }}>返回歌单</p>
                             </div>
-                            <PlaylistUi reverseHideHandler={reverseHideHandler} palyRef={ref}
-                                        list={state.personalizedList}/>
+                            <PlaylistUi palyRef={ref} list={state.personalizedList}/>
                         </div>
                     </>
                 )
