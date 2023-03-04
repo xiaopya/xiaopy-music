@@ -12,6 +12,7 @@
     "@arco-design/web-react": "^2.40.1",
     "babel-helpers": "^6.24.1",
     "classnames": "^2.3.2",
+    "dayjs": "^1.11.7",
     "lodash": "^4.17.21",
     "qs": "^6.11.0",
     "react-flippy": "^1.1.0",

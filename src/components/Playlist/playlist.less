@@ -11,22 +11,25 @@
   box-shadow: 0 0 0 0 var(--shadow-color) !important;
 }
 
+.spanColor {
+  color: var(--text-color);
+}
+
 .ulBlock {
   color: var(--text-color);
+  padding: 0;
+
 
   li {
-    height: 43px;
     padding: 0 7px;
+    cursor: pointer;
 
     &:hover {
-      background: rgb(233, 240, 245);
+      background-color: rgb(233, 240, 245);
+      transition: background-color .2s;
 
       p:nth-child(1) {
         text-decoration: line-through;
-      }
-
-      P:nth-child(2) {
-        cursor: pointer;
       }
     }
 
