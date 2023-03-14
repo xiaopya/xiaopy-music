@@ -3,7 +3,7 @@ import Loading from '@/loading';
 import './drawerui.less';
 import classNames from "classnames";
 
-export function DrawerUi({visible, content, footer = null, onCancel, onOk, title = '', width = "30%"}) {
+export function DrawerUi({loading, visible, content, footer = null, onCancel, onOk, title = '', width = "30%"}) {
 
     return (
         <Drawer
@@ -17,7 +17,7 @@ export function DrawerUi({visible, content, footer = null, onCancel, onOk, title
             onCancel={onCancel}
             footer={footer}
         >
-            {!!content ? content : <Loading/>}
+            {!loading ? content : <Loading/>}
         </Drawer>
 
     );

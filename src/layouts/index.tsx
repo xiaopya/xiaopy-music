@@ -2,7 +2,8 @@ import * as React from 'react';
 import {history, Outlet, useAppData, useLocation} from 'umi';
 import './index.less';
 import classNames from "classnames";
-import SwitchUi from '@/components/Switch'
+import SwitchUi from '@/components/Switch';
+import MusicPlayer from '@/components/MusicPlayer';
 
 /**
  * 路由菜单
@@ -18,23 +19,13 @@ export default function SpeedDialTooltipOpen() {
 
     return (
         <div>
-            <div className={classNames({
-                headerMenu: true,
-            })}>
-                <div className={classNames({
-                    navs: true,
-                })}>
-                    <div className={classNames({
-                        logo: true,
-                    })} onClick={clickLogoHandler}>
+            <div className="headerMenu">
+                <div className="navs">
+                    <div className="logo" onClick={clickLogoHandler}>
                         {"{"}<span>xiaopy</span>{"}"}
                     </div>
-                    <div className={classNames({
-                        navMain: true,
-                    })}>
-                        <div className={classNames({
-                            navLink: true,
-                        })}>
+                    <div className="navMain">
+                        <div className="navLink">
                             {Object.values(routes)?.filter((val) => !val?.isLayout).map((action: any) => (
                                 <span
                                     className={classNames({
@@ -55,6 +46,7 @@ export default function SpeedDialTooltipOpen() {
                     </div>
                 </div>
             </div>
+            <MusicPlayer/>
             <Outlet/>
         </div>
     );

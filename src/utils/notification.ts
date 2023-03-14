@@ -1,23 +1,22 @@
 import {Notification} from '@arco-design/web-react';
-import qs from 'qs';
 
-export function promptSuccess(s: unknown) {
-    Notification.error({
-        title: 'success',
-        content: qs.stringify(s),
+export function promptSuccess(s: string) {
+    Notification.success({
+        title: s,
+        content: "",
     })
 }
 
-export function promptError(s: unknown) {
+export function promptError(s: string) {
     Notification.error({
-        title: 'error',
-        content: qs.stringify(s),
+        title: s,
+        content: "",
     })
 }
 
-export function promptInfo(s: unknown) {
-    Notification.error({
-        title: 'info',
-        content: qs.stringify(s),
+export function promptInfo(s: string) {
+    Notification.info({
+        title: s,
+        content: "",
     })
 }

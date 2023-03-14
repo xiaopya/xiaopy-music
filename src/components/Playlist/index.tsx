@@ -1,20 +1,40 @@
 import React, {memo, useState} from 'react';
 import {Avatar, Comment, Grid, Image, Space, Tag} from '@arco-design/web-react';
-import {commentPlaylist, playListDetail} from '@/servers';
-import './playlist.less'
+import {commentPlaylist, playListDetail, songList} from '@/servers';
+import {promptError, promptInfo} from '@/utils/notification';
 import {DrawerUi} from "@/components/DrawerUi";
 import classNames from "classnames";
 import StopCircle from '@/static/stop-circle-line'
 import PlayCircle from '@/static/play-circle-line'
+import hotSvg from '@/images/hot.svg'
+import './playlist.less'
 
 const Row = Grid.Row;
 
 interface playListType {
     id: number;
-    name: string,
-    picUrl?: string,
-    pshut?: boolean,
+    name: string;
+    picUrl?: string;
+    pshut?: boolean;
 }
+
+interface reqType {
+    code: number;
+    hotComments: object[];
+    comments: object[];
+    playlist: object[];
+}
+
+interface stateType {
+    playListId: undefined | number;
+    playList: object[];
+    comment: object[];
+    listName: string;
+    visible: boolean;
+    type: string;
+    loading: boolean;
+}
+
 
 const options = [
     {
@@ -28,48 +48,112 @@ const options = [
 ]
 
 
-const PlaylistUi = memo(({list, palyRef}) => {
+const PlaylistUi = memo(({list}) => {
 
-    const [state, setState] = useState<any>({
+    const ap = window.ap;
+    const HS = window.HS;
+
+    const [state, setState] = useState<stateType>({
         playListId: undefined,
         playList: [],
         comment: [],
         listName: undefined,
         visible: false,
         type: 'music',
+        loading: false,
     });
 
-    const InitializingData = async (value) => {
+    const InitializingData = async (value: number) => {
         try {
-            const res = await playListDetail({
+            setState((s) => ({
+                ...s,
+                loading: true,
+            }))
+            const result = await playListDetail({
                 id: value,
-            })
-            if (res.code === 200) {
-                res.playlist.tracks?.map(v => {
+            }) as reqType
+            if (result.code === 200) {
+                console.log(result)
+                result.playlist.tracks?.map(v => {
                     v.pshut = false;
                 })
                 setState((s) => ({
                     ...s,
-                    playList: res.playlist.tracks,
+                    playList: result.playlist.tracks,
                     comment: [],
                     type: "music",
+                    loading: false,
                 }))
             }
+            return result;
         } catch (err) {
             console.log("歌单详情：", err);
         }
     }
 
+    const handlerComment = async () => {
+        try {
+            setState((s) => ({
+                ...s,
+                loading: true,
+            }))
+            const result = await commentPlaylist({
+                id: state.playListId,
+            }) as reqType
+            if (result.code === 200) {
+                setState((s) => ({
+                    ...s,
+                    playList: [],
+                    comment: [...result.hotComments, ...result.comments],
+                    type: "comment",
+                    loading: false,
+                }))
+            }
+            return result;
+        } catch (err) {
+            console.log("评论：", err);
+        }
+    }
 
-    const clickListHandler = (val) => {
-        state.playList.filter(v => v.id !== val.id).map(fval => fval.pshut = false)
 
-        val.pshut = !val.pshut;
+    const clickListHandler = async (val) => {
+        try {
+            const songs = await songList({
+                id: val.val.id,
+            });
+            if (songs.code === 200) {
+                const {picUrl, name, id} = val.val.al;
+                const songArrs = songs.data;
 
-        setState((s) => ({
-            ...s,
-            playList: state.playList
-        }))
+                const tempIds = ap.list.audios.map(v => v.id);
+                if (!tempIds.includes(id)) {
+                    for (let i = 0; i < songArrs.length; i++) {
+                        ap.list.add([{
+                            name: name,
+                            url: songArrs[i].url,
+                            cover: picUrl,
+                            id,
+                        }]);
+                    }
+                } else {
+                    promptInfo("已经添加过该歌曲了");
+                }
+                HS.show();
+            } else {
+                promptError("添加失败");
+            }
+
+
+            state.playList.filter(v => v.id !== val.id).map(fval => fval.pshut = false)
+
+            val.pshut = !val.pshut;
+            setState((s) => ({
+                ...s,
+                playList: state.playList
+            }))
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const onOk = (val) => {
@@ -80,29 +164,14 @@ const PlaylistUi = memo(({list, palyRef}) => {
         setState((s) => ({...s, visible: false, comment: [],}))
     }
 
-    const handlerOptions = async (value) => {
+    const handlerOptions = async (value: { value: number, label: string, }) => {
         if (value.value === 1) {
-            InitializingData(state.playListId);
+            InitializingData(state.playListId).then(() => Promise.resolve());
         }
         // 评论
         if (value.value === 2) {
-            try {
-                const result = await commentPlaylist({
-                    id: state.playListId,
-                })
-                if (result.code === 200) {
-                    setState((s) => ({
-                        ...s,
-                        playList: [],
-                        comment: [...result.hotComments, ...result.comments],
-                        type: "comment",
-                    }))
-                }
-            } catch (err) {
-                console.log("评论：", err);
-            }
+            handlerComment().then(() => Promise.resolve());
         }
-
     }
 
     const renderConfig = {
@@ -111,9 +180,9 @@ const PlaylistUi = memo(({list, palyRef}) => {
                 'ulBlock': true,
             })}>
                 {
-                    state.playList?.map((val: playListType) => (
-                        <li>
-                            <div onClick={() => clickListHandler(val)}>
+                    state.playList?.map((val: any) => (
+                        <li key={val.id}>
+                            <div onClick={() => clickListHandler({val: val})}>
                                 <p className={classNames({
                                     "apply-shake": val.pshut
                                 })}>{val.name}</p>
@@ -133,10 +202,15 @@ const PlaylistUi = memo(({list, palyRef}) => {
                 'ulBlock': true,
             })}>
                 {
-                    state.comment?.map((val: any) => (
+                    state.comment?.map((val: any, idx: number) => (
                         <Comment
                             key={val.commentId}
-                            author={val.user.nickname}
+                            author={
+                                <Space>
+                                    {idx < 10 && <Image width={15} src={hotSvg}/>}
+                                    {val.user.nickname}
+                                </Space>
+                            }
                             avatar={
                                 <Avatar>
                                     <img
@@ -156,11 +230,6 @@ const PlaylistUi = memo(({list, palyRef}) => {
         ),
     }
 
-    // useEffect(() => {
-    //     InitializingData();
-    // }, [state.playListId])
-
-
     return (
         <>
             <Row className='grid-gutter-demo'>
@@ -174,14 +243,13 @@ const PlaylistUi = memo(({list, palyRef}) => {
                              key={listval.id}
 
                              onClick={() => {
-                                 // @ts-ignore
                                  setState((s) => ({
                                      ...s,
                                      visible: true,
                                      playListId: listval.id,
                                      listName: listval.name,
                                  }))
-                                 InitializingData(listval.id);
+                                 InitializingData(listval.id).then(() => Promise.resolve());
                              }}
                         >
                             <div style={{
@@ -215,8 +283,9 @@ const PlaylistUi = memo(({list, palyRef}) => {
                     </span>
                 }
                 visible={state.visible}
+                loading={state.loading}
                 content={
-                    <div>
+                    <>
                         <Space>
                             {
                                 options?.map(v => (
@@ -225,7 +294,7 @@ const PlaylistUi = memo(({list, palyRef}) => {
                             }
                         </Space>
                         {renderConfig[state.type]}
-                    </div>
+                    </>
                 }
                 onCancel={onCancel}
                 onOk={onOk}
