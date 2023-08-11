@@ -12,7 +12,6 @@ import LinearIndeterminate from '@/loading'
 
 import {bannerLists, personalized} from '@/servers';
 
-
 import './music.less'
 
 
@@ -30,16 +29,16 @@ const Music = () => {
     });
 
     async function InitializingData() {
-        const s = await bannerLists();
+        const bl = await bannerLists();
         // const ss = await personalizedNewSong({
         //     limit: 14,
         // });
-        const sss = await personalized({
+        const ps = await personalized({
             limit: 14,
         });
 
-        Promise.all([s, sss]).then(() => {
-            setState({loading: true, bannerList: s.banners, personalizedList: sss.result,})
+        Promise.all([bl, ps]).then(() => {
+            return setState((ss)=>({ ...ss,loading: true, bannerList: bl.banners, personalizedList: ps?.result, }));
         })
 
     }
@@ -48,16 +47,14 @@ const Music = () => {
         // dispatchGetBannerListsHandler(dispatch, {});
         // dispatchGetPersonalizedNewSongHandler(dispatch, {limit: 14})
         // dispatchGetPersonalizedHandler(dispatch, {limit: 14,})
-        InitializingData().then(() => {
-        });
+        InitializingData();
     }, [])
 
     return (
         <div className={classNames({
             'mainPadding': true,
         })}>
-            {
-                !state.loading ? <LinearIndeterminate/> : (
+            {!state.loading ? <LinearIndeterminate/> : (
                     <>
                         <CarouselUi imageSrc={state.bannerList}/>
                         <div>
@@ -69,8 +66,7 @@ const Music = () => {
                             <PlaylistUi palyRef={ref} list={state.personalizedList}/>
                         </div>
                     </>
-                )
-            }
+                )}
         </div>
     )
 }

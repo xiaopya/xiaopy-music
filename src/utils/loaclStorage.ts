@@ -1,4 +1,5 @@
 class Catch {
+    storage: Storage;
     constructor(isLocal = true) {
         this.storage = isLocal ? localStorage : sessionStorage;
     }

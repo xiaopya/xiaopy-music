@@ -11,8 +11,8 @@ export const routes = [
     },
     {
         path: '/timeline',
-        component: '@/pages/GitLogTime',
-        name: '日志',
+        component: '@/pages/GlobalMusic',
+        name: '搜搜',
     },
     // {
     //     path: '/individuals',
