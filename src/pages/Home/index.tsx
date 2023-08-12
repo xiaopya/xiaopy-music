@@ -1,9 +1,11 @@
-import React from 'react'
-import classNames from 'classnames'
-import styles from './home.less'
-import { distinguishTime } from '@/utils'
-import useTypewriter from 'react-typewriter-hook'
-import { HOME_CONTENTS } from '@/constants'
+import React from 'react';
+import classNames from 'classnames';
+import { Popconfirm } from '@arco-design/web-react';
+import styles from './home.less';
+import { distinguishTime } from '@/utils';
+import useTypewriter from 'react-typewriter-hook';
+import { cloudsearchLists } from '@/servers';
+import { HOME_CONTENTS } from '@/constants';
 
 /**
  * 首页
@@ -12,6 +14,19 @@ import { HOME_CONTENTS } from '@/constants'
 export default function Home() {
     const writer = useTypewriter(HOME_CONTENTS.WRITER_TEXT)
 
+    const props = {
+        title: '要听这首 {Ephemeral Memories} 歌吗',
+        defaultPopupVisible: true,
+        icon: '🥱🥱',
+        okText: '听',
+        cancelText: '不听不听',
+        onOk: async () => {
+            cloudsearchLists({keywords: 'Ephemeral Memories',});
+        },
+        onCancel: () => {
+
+        },
+    };
     return (
         <div
             className={classNames({
@@ -25,7 +40,7 @@ export default function Home() {
                     [styles.pyCard]: true
                 })}
             >
-                [<span>{writer}</span>]
+                {"{"}<span>{writer}</span>{"}"}
                 {HOME_CONTENTS.TIME_TEXT.map(({ time, timeText, content }) => {
                     if (time === distinguishTime()) {
                         return (
@@ -36,7 +51,11 @@ export default function Home() {
                                 })}
                             >
                                 <p>
-                                    [{timeText}]&nbsp;&nbsp;&nbsp;{content}
+                                    {"{"}{timeText}{" O.o }"}&nbsp;&nbsp;&nbsp;{content}{time === 2 && (
+                                    <Popconfirm position='bl' {...props}>
+                                        如何?
+                                    </Popconfirm>
+                                )}
                                 </p>
                             </div>
                         )

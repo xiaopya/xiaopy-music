@@ -9,6 +9,7 @@ export const Http = {
      */
     get: function (url: string, data: any = {}) {
         const newUrl = `${url}?${qs.stringify(data)}`;
+        console.log(newUrl,data)
         const signal = controller.signal;
         return new Promise((resolve, reject) => {
             fetch(newUrl, {

@@ -4,10 +4,12 @@ import { commentPlaylist, playListDetail, songList } from '@/servers'
 import { promptError, promptInfo } from '@/utils/notification'
 import { DrawerUi } from '@/components/DrawerUi'
 import classNames from 'classnames'
+import {RPopover} from '@/components/Popover';
 import StopCircle from '@/static/stop-circle-line'
 import PlayCircle from '@/static/play-circle-line'
 import hotSvg from '@/images/hot.svg'
 import './playlist.less'
+
 
 const Row = Grid.Row
 
@@ -193,7 +195,7 @@ const PlaylistUi = memo(({ list }) => {
                                 'music-display': true
                             })}
                         >
-                            <Typography.Text mark>{"{"}{name}{"}"}</Typography.Text>
+                            {"{"}<Typography.Text mark>{name}</Typography.Text>{"}"}
                             <span>{val.name}</span>
                         </p>
                         <p>{val.pshut ? <StopCircle /> : <PlayCircle />}</p>

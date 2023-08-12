@@ -2,6 +2,15 @@ import {Api} from "@/api";
 import {Http} from "@/utils/fetch";
 
 /**
+ * 全局歌曲搜索
+ * 说明 : 调用此接口 , 传入搜索关键词可以搜索该音乐 / 专辑 / 歌手 / 歌单 / 用户 , 关键词可以多个 , 以空格隔开 , 如 " 周杰伦 搁浅 "( 不需要登录 ), 可通过 /song/url 接口传入歌曲 id 获取具体的播放链接
+ * @returns
+ */
+export async function cloudsearchLists(params) {
+    return await Http.get(Api.MUSIC.MUSIC_SEARCH,params);
+}
+
+/**
  * 轮播图
  * 说明 : 调用此接口 , 可获取 banner( 轮播图 ) 数据
  * @returns

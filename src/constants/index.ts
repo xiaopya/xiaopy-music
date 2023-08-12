@@ -9,11 +9,11 @@ export const HOME_CONTENTS = {
         {
             time: 2,
             timeText: '中午好',
-            content: "正午的阳光,让人想要小睡片刻.找个地方休息一下如何?",
+            content: "正午的阳光,让人想要小睡片刻.找个地方休息一下或者听首歌",
         },
         {
             time: 3,
-            timeText: '晚安啦',
+            timeText: '晚安',
             content: "安静的世界,适合好好休息.明天见...",
         },
     ],
